@@ -5,7 +5,7 @@ https://github.com/Ramalama2/Voron-2-Mods/tree/main/Front_Idlers
 
 In my opinion, the body part is too fragile :
 - The 4 pins on body broken easily
-- Body walls were too small. I increased the walls
+- Body walls are too small. So I increased the walls
 
 See differences on the picture below. In black the original and in red the improved model :
 
