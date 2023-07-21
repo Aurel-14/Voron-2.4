@@ -7,4 +7,4 @@ Body Part was too fragile :
 
 See differences on the picture below. In bleu the original and in red the imroved model :
 
-https://github.com/Aurel-14/Voron-2.4/blob/main/IDLER%20TENSIONER/PICTURES/IDLER_TENSIONER_01.PNG?raw=true
+![](PICTURE/IDLER_TENSIONER_02.PNG
