@@ -7,4 +7,4 @@ Body Part was too fragile :
 
 See differences on the picture below. In bleu the original and in red the imroved model :
 
-![](PICTURE/IDLER_TENSIONER_02.PNG
+![](PICTURE/IDLER_TENSIONER_02.PNG)
