@@ -10,3 +10,7 @@ In my opinion, the body part is too fragile :
 See differences on the picture below. In black the original and in red the improved model :
 
 ![](https://github.com/Aurel-14/Voron-2.4/blob/main/IDLER%20TENSIONER/PICTURES/IDLER_TENSIONER_02.PNG)
+
+Below see my Design without the pins. Replaced by 2 shapes in up and down :
+
+![](https://github.com/Aurel-14/Voron-2.4/blob/main/IDLER%20TENSIONER/PICTURES/IDLER_TENSIONER_01.PNG)
