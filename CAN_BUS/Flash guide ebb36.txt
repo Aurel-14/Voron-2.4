@@ -1,0 +1,96 @@
+1: Install the OS. Flash it with Raspberry Pi imager or Balena Etcher
+ https://github.com/bigtreetech/CB1/re...
+  I used https://github.com/bigtreetech/CB1/re...
+
+2: Enter your wifi info in the system.cfg file Remember both the SSID and Password are case sensitive. 
+
+3: Boot up and update. Everything! 
+ 
+ sudo apt-get update && sudo apt-get upgrade -y
+
+4: Install CanBoot (note It's now called katapult )
+ (https://github.com/Arksine/katapult) its a heplfull tool for updating firmware later on the EBB
+ 
+ cd ~ && git clone https://github.com/Arksine/katapult
+
+5: Make the katapult bootloader for the EBB
+
+ cd katapult
+ make menuconfig
+
+  Enter the information for your EBB. I am using the EBB42 V1.1. Check the information for the you you are using as pins and board can be different. The process is the same though. 
+
+ My version uses the STMG0B1 chip and PB0/PB1 for CAN Communication.
+ 
+ After you input your boards info hit Q then Y to save the config. 
+ 
+ Then run,
+
+ make clean
+ make
+
+6: Extract the katapult.bin file with something like winscp 
+
+7: Open STM32 cube Programmer and install the bootloader. 
+
+8: Verify the connection, and copy your UUID for future use.
+  
+ ~/katapult/scripts/flash_can.py -i can0 -q     
+
+ or
+
+ ~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0
+
+9: make klipper for the M8P
+
+ cd ~/klipper/
+ make menuconfig
+
+ [\*] Enable extra low level configuration options
+ Micro controller Architecture (STMicroelectronics STM32 )
+ Processor model (STM32G0B1 )
+ Bootloader offset 8 KiB bootloader)
+ Clock Reference (8 MHz crystal)
+ Communication interface (USB to CAN bus bridge (USB on PA11/PA12))
+ CAN bus interface (CAN bus (on PD12/PD13))
+ (500000) CAN bus speed
+
+ make clean
+ make
+
+10: Enter DFU mode. Hold BOOT and tap RESET, then let go of BOOT. There will be no notification that it went into DFU mode but it shoud have if you did the sequence.
+
+11: flash the firmware.
+ make flash FLASH_DEVICE=0483:df11
+
+12: check the UUID and copy it down.
+  ~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0  M8P uuid=ff83f3999642  
+
+
+13: make klipper firmware for the EBB       
+ cd ~/klipper/
+ make menuconfig
+  input the info for your ebb
+ make clean
+ make
+
+14: flash the ebb
+
+ python3 ~/katapult/scripts/flash_can.py -i can0 -f ~/klipper/out/klipper.bin -u Put_Your_UUID_Here    EBB uuid=2f31fdebecf0
+
+
+
+15: Set up klipper and enjoy
+
+Note: you may need to double check the can0 setup. 
+ check can0 setup,
+  sudo nano /etc/network/interfaces.d/can0
+   
+   this is the settings I use in there:
+
+    allow-hotplug can0
+    iface can0 can static
+         bitrate 250000
+         up ifconfig $IFACE txqueuelen 1024
+  ctrl-x to exit 
+  y to confirm the change and enter to save.
